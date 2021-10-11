@@ -1,5 +1,12 @@
+html {
+    background-color: #131316;
+}
+
 #root {
     display: flex;
     justify-content: center;
     font-family: 'Open Sans', sans-serif;
+    --main-bg-color: #2f2f37;
+    --highlight-color: #6987c9;
+    --text-color: #ffffff;
 }
