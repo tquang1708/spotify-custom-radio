@@ -1,3 +1,5 @@
+import './Button.css';
+
 function FoldButton(props) {
     const { isVisible, showSubsection, setShowSubsection } = props;
     const onClickShowSubsection = () => setShowSubsection(!showSubsection);

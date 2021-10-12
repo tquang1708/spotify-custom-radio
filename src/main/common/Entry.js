@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import FoldButton from './FoldButton';
 import DeleteButton from './DeleteButton';
+import './Entry.css';
 
 function Entry(props) {
     const { mainName, subName, imageUrl, hasSubsection, subsection, hasDeleteButton } = props;

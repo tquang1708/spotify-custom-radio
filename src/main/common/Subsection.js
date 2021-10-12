@@ -1,4 +1,5 @@
 import DeleteButton from "./DeleteButton";
+import './Subsection.css';
 
 function Subsection(props) {
     const { mainName, subsectionTitles, hasDeleteButton } = props

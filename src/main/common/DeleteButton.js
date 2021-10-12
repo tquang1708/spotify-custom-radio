@@ -1,3 +1,5 @@
+import './Button.css';
+
 function DeleteButton(props) {
     const isSubsection = props.isSubsection;
 

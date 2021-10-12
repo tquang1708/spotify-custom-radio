@@ -1,0 +1,29 @@
+.main-title {
+    font-weight: bold;
+    margin: 5px;
+    border-bottom: 1px solid var(--highlight-color);
+}
+
+.main-entry {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-entry-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: default;
+}
+
+.main-entry-details:hover {
+    background-color: var(--highlight-color);
+}
+
+.main-entry-details-left {
+    display: flex;
+    flex-direction: row;
+}

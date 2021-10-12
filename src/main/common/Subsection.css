@@ -1,0 +1,17 @@
+.main-entry-subsection {
+    list-style-type: none;
+}
+
+.main-entry-subsection-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
+    padding-left: 35px;
+    padding-right: 5px;
+}
+
+.main-entry-subsection-item:hover {
+    background-color: var(--highlight-color);
+}

@@ -1,0 +1,23 @@
+.main-button {
+    width: 15px;
+}
+
+.main-visible-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold; 
+    cursor: pointer;
+}
+
+.main-delete-button {
+    background-color: var(--delete-color);
+}
+
+.main-delete-button:hover {
+    background-color: var(--delete-hover-color);
+}
+
+.main-entry-details-delete-button {
+    height: 100px;
+}
