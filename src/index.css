@@ -9,4 +9,6 @@ html {
     --main-bg-color: #2f2f37;
     --highlight-color: #6987c9;
     --text-color: #ffffff;
+    --delete-color: #f0567a;
+    --delete-hover-color: #e11444;
 }

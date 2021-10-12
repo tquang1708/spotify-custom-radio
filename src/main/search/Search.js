@@ -1,96 +1,31 @@
 import { useState } from 'react';
-import './Search.css'
+import Entry from '../common/Entry';
+import './Search.css';
 
-const cartiArtist = "https://lastfm.freetls.fastly.net/i/u/770x0/6d9bfcf2d0b72abed86c72ccf99ccf33.jpg"
-const cartiLit = "https://e.snmc.io/i/fullres/w/bec4478f4b274d9365f8d8b25858fa33/7212299"
+import Subsection from '../common/Subsection';
 
-function FoldButton(props) {
-    const { isArtistResult, showSubsection, setShowSubsection } = props;
-    const onClickShowSubsection = () => setShowSubsection(!showSubsection);
-    const onMouseDownPreventDefault = (e) => e.preventDefault();
-
-    if (isArtistResult) {
-        return (
-            <div 
-                className="search-searchresult-button foldbutton"
-                onClick={onClickShowSubsection}
-                onMouseDown={onMouseDownPreventDefault}>
-                {showSubsection ? "—" : "+"}
-            </div>
-        );
-    } else {
-        return (<div className="search-searchresult-button"></div>);
-    };
-}
-
-function SearchResultEntry(props) {
-    const { imageUrl, mainName, subName, isArtistResult } = props;
-    const [ showSubsection, setShowSubsection ] = useState(false);
-    const subsection =
-        <div className="search-searchresult-subsection">
-            <div className="search-searchresult-subsection-item">Add Discography</div>
-            <div className="search-searchresult-subsection-item">Add Top Tracks</div>
-        </div>;
-
-    return (
-        <div className="search-searchresult-entry">
-            <div className="search-searchresult-entry-info">
-                <FoldButton 
-                    isArtistResult={isArtistResult}
-                    showSubsection={showSubsection}
-                    setShowSubsection={setShowSubsection} />
-                <img 
-                    src={imageUrl}
-                    alt={mainName}
-                    style={{width: '90px', height: '90px', padding: '5px'}}
-                ></img>
-                <div>
-                    <h3>{mainName}</h3>
-                    <p>{subName}</p>
-                </div>
-            </div>
-            {showSubsection && subsection}
-        </div>
-    );
-}
+const utamonogatari = "https://e.snmc.io/i/fullres/w/f3903c2304ba9cffa52bd5acdbccb4c6/5978269"
+const utamonogatari2 = "https://e.snmc.io/i/fullres/w/e53de5208afdbd66d694720145a46de2/7449404"
 
 function SearchResult() {
+    const subsectionTitles = ["Add Discography", "Add Top Tracks"];
+    const subsection = <Subsection mainName="物語シリーズ" subsectionTitles={subsectionTitles}/>;
+
     return (
-        <div className="search-searchresult">
-            <p className="search-searchresult-title">Artists</p>
-            <SearchResultEntry
-                isArtistResult={true}
-                imageUrl={cartiArtist}
-                mainName="Playboi Carti"
+        <div className="search-searchresult main-component">
+            <p className="main-title">Artists</p>
+            <Entry
+                mainName="物語シリーズ"
+                imageUrl={utamonogatari}
+                hasSubsection={true}
+                subsection={subsection}
             />
-            <SearchResultEntry
-                isArtistResult={true}
-                imageUrl={cartiArtist}
-                mainName="Playboi Carti"
-            />
-            <SearchResultEntry
-                isArtistResult={true}
-                imageUrl={cartiArtist}
-                mainName="Playboi Carti"
-            />
-            <p className="search-searchresult-title">Albums</p>
-            <SearchResultEntry
-                isArtistResult={false}
-                imageUrl={cartiLit}
-                mainName="Die Lit"
-                subName="Playboi Carti"
-            />
-            <SearchResultEntry
-                isArtistResult={false}
-                imageUrl={cartiLit}
-                mainName="Die Lit"
-                subName="Playboi Carti"
-            />
-            <SearchResultEntry
-                isArtistResult={false}
-                imageUrl={cartiLit}
-                mainName="Die Lit"
-                subName="Playboi Carti"
+            <p className="main-title">Albums</p>
+            <Entry
+                mainName="歌物語2 -〈物語〉シリーズ主題歌集-"
+                subName="物語シリーズ"
+                imageUrl={utamonogatari2}
+                hasSubsection={false}
             />
         </div>
     );
@@ -106,7 +41,7 @@ function Search() {
     return (
         <div className="search">
             <input
-                className="search-searchbar"
+                className="search-searchbar main-component"
                 type="text"
                 placeholder="Search..."
                 value={query}
