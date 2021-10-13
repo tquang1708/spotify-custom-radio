@@ -1,15 +1,18 @@
+import { useState } from 'react';
 import UserInfo from './userinfo/UserInfo';
 import Search from './search/Search';
 import Playlist from './playlist/Playlist';
 import Submit from './submit/Submit';
 import './Main.css';
 
-function Main(props) {
+function Main() {
+    const [ playlist, setPlaylist ] = useState([]);
+
     return (
         <div className="main">
             <UserInfo />
-            <Search />
-            <Playlist />
+            <Search playlist={playlist} setPlaylist={setPlaylist} />
+            <Playlist playlist={playlist} setPlaylist={setPlaylist} />
             <Submit />
         </div>
     );

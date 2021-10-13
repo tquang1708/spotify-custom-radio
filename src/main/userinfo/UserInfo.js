@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react';
 import './UserInfo.css';
+import { useState, useEffect } from 'react';
+import { handleTokenExpiry } from '../HandleTokenExpiry';
 
 function UserInfo() {
     const handleLogout = () => {
         window.sessionStorage.removeItem("authorized");
         window.sessionStorage.removeItem("access_token");
+        window.sessionStorage.removeItem("access_token_timestamp");
         alert("You have been logged out successfully.");
         window.location.reload();
     }
 
     const [ userName, setUserName ] = useState("");
     useEffect(() => {
+        handleTokenExpiry();
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',

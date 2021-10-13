@@ -11,7 +11,7 @@ function Entry(props) {
     const onMouseDownPreventDefault = (e) => e.preventDefault();
 
     return (
-        <div className="main-entry">
+        <div key={mainName + subName} className="main-entry">
             <div className="main-entry-details">
                 <div
                     className="main-entry-details-left"

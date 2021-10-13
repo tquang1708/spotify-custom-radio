@@ -18,6 +18,7 @@ function Callback(props) {
         if (valid) {
             sessionStorage.setItem("authorized", "true");
             sessionStorage.setItem("access_token", access_token);
+            sessionStorage.setItem("access_token_timestamp", Date.now());
             sessionStorage.removeItem("spt_auth_state");
             setAuthorized(true);
         } else {

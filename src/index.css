@@ -5,6 +5,7 @@ html {
     --highlight-color-dark: #7880b5;
     --highlight-color-dark-2: #57609e;
     --text-color: #ffffff;
+    --text-color-dim: #9c9cab;
     --delete-color: #f0567a;
     --delete-hover-color: #e11444;
     background-color: var(--site-bg-color);
@@ -41,4 +42,8 @@ a:hover {
 /* selected link */
 a:active {
     color: var(--highlight-color-dark-2);
-} 
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+}
