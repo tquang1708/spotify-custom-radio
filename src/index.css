@@ -19,22 +19,26 @@ html {
     height: 100vh;
 }
 
+a {
+    text-decoration: none;
+}
+
  /* unvisited link */
- a:link {
+a:link {
     color: var(--highlight-color);
-  }
+}
   
-  /* visited link */
-  a:visited {
+/* visited link */
+a:visited {
     color: var(--highlight-color);
-  }
+}
   
-  /* mouse over link */
-  a:hover {
+/* mouse over link */
+a:hover {
     color: var(--highlight-color-dark);
-  }
+}
   
-  /* selected link */
-  a:active {
+/* selected link */
+a:active {
     color: var(--highlight-color-dark-2);
-  } 
+} 

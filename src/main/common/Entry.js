@@ -22,7 +22,7 @@ function Entry(props) {
                         showSubsection={showSubsection} />
                     <img 
                         src={imageUrl}
-                        alt={mainName}
+                        alt=""
                         style={{width: '90px', height: '90px', padding: '5px'}}
                     ></img>
                     <div>

@@ -21,7 +21,11 @@ function UserInfo() {
 
         fetch('https://api.spotify.com/v1/me', requestOptions)
             .then(response => response.json())
-            .then(data => setUserName(data["display_name"]));
+            .then(data => setUserName(data["display_name"]))
+            .catch(error => {
+                setUserName("<error>");
+                console.log(error);
+            });
     }, []);
 
     return (

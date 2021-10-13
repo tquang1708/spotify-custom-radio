@@ -12,6 +12,7 @@ function Callback(props) {
     const responseState = response.get("state");
 
     const valid = access_token && (spotifyState === responseState);
+    // const valid = false;
 
     useEffect (() => {
         if (valid) {
