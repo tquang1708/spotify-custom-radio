@@ -1,14 +1,40 @@
 html {
-    background-color: #131316;
+    --site-bg-color: #131316;
+    --main-bg-color: #2f2f37;
+    --highlight-color: #6987c9;
+    --highlight-color-dark: #7880b5;
+    --highlight-color-dark-2: #57609e;
+    --text-color: #ffffff;
+    --delete-color: #f0567a;
+    --delete-hover-color: #e11444;
+    background-color: var(--site-bg-color);
+    font-family: 'Open Sans', sans-serif;
 }
 
 #root {
     display: flex;
     justify-content: center;
-    font-family: 'Open Sans', sans-serif;
-    --main-bg-color: #2f2f37;
-    --highlight-color: #6987c9;
-    --text-color: #ffffff;
-    --delete-color: #f0567a;
-    --delete-hover-color: #e11444;
+    align-items: flex-start;
+    width: 100vw;
+    height: 100vh;
 }
+
+ /* unvisited link */
+ a:link {
+    color: var(--highlight-color);
+  }
+  
+  /* visited link */
+  a:visited {
+    color: var(--highlight-color);
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: var(--highlight-color-dark);
+  }
+  
+  /* selected link */
+  a:active {
+    color: var(--highlight-color-dark-2);
+  } 

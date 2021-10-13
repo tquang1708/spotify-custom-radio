@@ -17,6 +17,7 @@ function SearchResult() {
             <Entry
                 mainName="物語シリーズ"
                 imageUrl={utamonogatari}
+                isSearchResult={true}
                 hasSubsection={true}
                 subsection={subsection}
             />
@@ -25,6 +26,7 @@ function SearchResult() {
                 mainName="歌物語2 -〈物語〉シリーズ主題歌集-"
                 subName="物語シリーズ"
                 imageUrl={utamonogatari2}
+                isSearchResult={true}
                 hasSubsection={false}
             />
         </div>

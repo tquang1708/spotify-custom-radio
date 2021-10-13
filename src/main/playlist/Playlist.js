@@ -9,7 +9,7 @@ function Playlist() {
     const subsection = <Subsection mainName="Playboi Carti" subsectionTitles={subsectionTitles} hasDeleteButton={true} />;
 
     return (
-        <div className="playlist main-component">
+        <div className="main-component playlist">
             <p className="main-title">Current Playlist</p>
             <Entry
                 mainName="Playboi Carti"

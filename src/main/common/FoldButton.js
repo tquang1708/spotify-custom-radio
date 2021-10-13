@@ -1,16 +1,12 @@
 import './Button.css';
 
 function FoldButton(props) {
-    const { isVisible, showSubsection, setShowSubsection } = props;
-    const onClickShowSubsection = () => setShowSubsection(!showSubsection);
-    const onMouseDownPreventDefault = (e) => e.preventDefault();
+    const { isVisible, showSubsection } = props;
 
     if (isVisible) {
         return (
             <div 
-                className="main-button main-visible-button"
-                onClick={onClickShowSubsection}
-                onMouseDown={onMouseDownPreventDefault}>
+                className="main-button main-visible-button">
                 {showSubsection ? "—" : "+"}
             </div>
         );

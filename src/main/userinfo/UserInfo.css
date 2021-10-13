@@ -1,0 +1,5 @@
+.userinfo {
+    display: flex;
+    justify-content: flex-end;
+    color: var(--text-color);
+}

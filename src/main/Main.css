@@ -9,3 +9,10 @@
     border: 3px solid var(--highlight-color);
     color: var(--text-color);
 }
+
+.main-title {
+    color: var(--text-color);
+    font-weight: bold;
+    margin: 5px;
+    border-bottom: 1px solid var(--highlight-color);
+}
