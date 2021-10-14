@@ -5,7 +5,7 @@
     align-items: baseline;
 }
 
-.submit-duplicate {
+.submit-checkbox {
     color: var(--text-color);
     display: flex;
     flex-direction: row;

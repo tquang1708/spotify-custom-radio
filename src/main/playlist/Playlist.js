@@ -13,11 +13,8 @@ function Playlist(props) {
             </p>;
     } else {
         playlistItems = Object.keys(playlist).map((i) => {
-            const subsectionTitles = playlist[i]['subsection'];
             const subsection = 
                 <Subsection 
-                    subsectionTitles={[...subsectionTitles].sort()}
-                    hasDeleteButton={true}
                     artistID={i}
                     playlist={playlist}
                     setPlaylist={setPlaylist} />;
@@ -25,13 +22,13 @@ function Playlist(props) {
             return <Entry
                 key={"playlist" + i}
                 artistID={i}
-                playlist={playlist}
-                setPlaylist={setPlaylist}
                 mainName={playlist[i]['name']}
+                subName={[...playlist[i]['subsection']].sort().join(', ')}
                 imageUrl={playlist[i]['imageUrl']}
                 hasSubsection={true}
                 subsection={subsection}
-                hasDeleteButton={true}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
             />
         });
     }

@@ -1,5 +1,6 @@
 .main-button {
     width: 15px;
+    flex-shrink: 0;
 }
 
 .main-visible-button {

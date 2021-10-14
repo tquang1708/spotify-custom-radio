@@ -8,13 +8,13 @@ function Entry(props) {
             subName, 
             artistName,
             artistID,
+            albumID,
             imageUrl, 
             isSearchResult, 
             hasSubsection, 
             subsection, 
-            hasDeleteButton, 
             playlist, 
-            setPlaylist, 
+            setPlaylist,
             setQuery, 
             setResultVisible } = props;
     const [ showSubsection, setShowSubsection ] = useState(false);
@@ -23,12 +23,18 @@ function Entry(props) {
     const onClickAddAlbum = () => {
         let newPlaylist = {...playlist};
         if (artistID in playlist) {
-            newPlaylist[artistID]['subsection'].add(`(album) ${mainName}`);
+            if (newPlaylist[artistID]['discography']) {
+                alert("You already added this artist's discography");
+            } else {
+                newPlaylist[artistID]['albums'][albumID] = mainName;
+            }
         } else {
             newPlaylist[artistID] = {
                 name: artistName,
                 imageUrl: imageUrl,
-                subsection: new Set([`(album) ${mainName}`]),
+                discography: false,
+                topTracks: false,
+                albums: {albumID: mainName},
             }
         };
         setPlaylist(newPlaylist);
@@ -55,7 +61,7 @@ function Entry(props) {
                         <p>{subName}</p>
                     </div>
                 </div>
-                {hasDeleteButton && 
+                {(!isSearchResult) && 
                     <DeleteButton 
                         artistID={artistID}
                         playlist={playlist}

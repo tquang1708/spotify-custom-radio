@@ -11,9 +11,13 @@ function Main() {
     return (
         <div className="main">
             <UserInfo />
-            <Search playlist={playlist} setPlaylist={setPlaylist} />
-            <Playlist key={playlist} playlist={playlist} setPlaylist={setPlaylist} />
-            <Submit />
+            <Search
+                playlist={playlist}
+                setPlaylist={setPlaylist} />
+            <Playlist
+                playlist={playlist} 
+                setPlaylist={setPlaylist} />
+            <Submit playlist={playlist} />
         </div>
     );
 }

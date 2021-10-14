@@ -1,21 +1,27 @@
 import { useState } from 'react';
 import './Submit.css';
 
-function Submit() {
+function Submit(props) {
+    const playlist = props.playlist;
     const [ duplicateChecked, setDuplicateChecked ] = useState(false);
     const onClickUpdateValue = () => setDuplicateChecked(!duplicateChecked);
+    const onClickSubmit = () => console.log(playlist);
 
     return (
         <div className="submit">
-            <div className="submit-duplicate">
+            <div className="submit-checkbox">
                 <input
                     type="checkbox"
                     checked={duplicateChecked}
                     onClick={onClickUpdateValue}
                 />
-                <div onClick={onClickUpdateValue}>Include Duplicate Track?</div>
+                <div onClick={onClickUpdateValue}>Make Playlist Public?</div>
             </div>
-            <div className="submit-button main-component">Submit</div>
+            <div 
+                className="submit-button main-component"
+                onClick={onClickSubmit}>
+                Submit
+            </div>
         </div>
     );
 }
