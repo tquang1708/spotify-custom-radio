@@ -4,12 +4,15 @@ import Entry from '../common/Entry';
 import Subsection from '../common/Subsection';
 
 function SearchResult(props) {
-    const { query, playlist, setPlaylist } = props;
+    const { query, setQuery, playlist, setPlaylist, setResultVisible } = props;
     const [ artistResults, setArtistResults ] = useState([]);
     const [ albumResults, setAlbumResults ] = useState([]);
+    const [ offsetArtist, setOffsetArtist ] = useState(0);
+    const [ offsetAlbum, setOffsetAlbum ] = useState(0);
 
     useEffect(() => {
         handleTokenExpiry();
+    
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',
@@ -20,49 +23,100 @@ function SearchResult(props) {
         const fetchURL = new URL('https://api.spotify.com/v1/search');
         fetchURL.searchParams.append('q', query);
         fetchURL.searchParams.append('market', 'from_token');
-        fetchURL.searchParams.append('limit', '5');
         fetchURL.searchParams.append('type', 'artist,album');
 
         fetch(fetchURL.href, requestOptions)
             .then(response => response.json())
             .then(data => {
-                setArtistResults(data["artists"]["items"]);
-                setAlbumResults(data["albums"]["items"]);
+                setArtistResults(data?.artists?.items);
+                setAlbumResults(data?.albums?.items);
             })
             .catch(error => {
                 console.log(error);
-            });
+        })
 
-            console.log("fetched")
-    }, [query]);
+        setOffsetArtist(0);
+        setOffsetAlbum(0);
+    }, [ query ]);
+
+    const limitArtist = artistResults ? artistResults.length : 0;
+    const limitAlbum = albumResults ? albumResults.length : 0;
 
     const subsectionTitles = ["Add Discography", "Add Top Tracks"];
-    const artistItems = artistResults.map((artist) => 
+    const artistItems = artistResults?.slice(offsetArtist, offsetArtist + 5).map((artist) => 
         <Entry
+            key={artist["id"]}
             mainName={artist["name"]}
             subName={artist["genres"].map((g) => g.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ')}
             imageUrl={artist.images?.at(-1)?.url}
             isSearchResult={true}
             hasSubsection={true}
-            subsection={<Subsection mainName={artist["name"]} subsectionTitles={subsectionTitles}/>}
+            subsection={<Subsection
+                id={artist["id"]}
+                subsectionTitles={subsectionTitles}
+                isSearchResult={true}
+                setQuery={setQuery}
+                setResultVisible={setResultVisible} />}
+            playlist={playlist}
+            setPlaylist={setPlaylist}
+            setQuery={setQuery}
         />
     );
-    const albumItems = albumResults.map((album) => 
+    const albumItems = albumResults?.slice(offsetAlbum, offsetAlbum + 5).map((album) => 
         <Entry
+            key={album["id"]} 
             mainName={album["name"]}
-            subName={album["artists"].map((at) => at["name"]).join(', ')}
+            subName={album["artists"].map((a) => a["name"]).join(', ')}
             imageUrl={album.images?.at(-1)?.url}
             isSearchResult={true}
             hasSubsection={false}
+            setResultVisible={setResultVisible}
+            playlist={playlist}
+            setPlaylist={setPlaylist}
+            setQuery={setQuery}
         />
     );
+
+    const onClickDecreaseOffsetArtist = () => setOffsetArtist(offsetArtist - 5);
+    const onClickIncreaseOffsetArtist = () => setOffsetArtist(offsetArtist + 5);
+    const onClickDecreaseOffsetAlbum = () => setOffsetAlbum(offsetAlbum - 5);
+    const onClickIncreaseOffsetAlbum = () => setOffsetAlbum(offsetAlbum + 5);
+    const onMouseDownPreventDefault = (e) => e.preventDefault();
 
     return (
         <div className="search-searchresult main-component">
             <p className="main-title">Artists</p>
+            {artistItems && offsetArtist > 0 &&
+                <div 
+                    className="main-entry-details search-scroll-buttons"
+                    onClick={onClickDecreaseOffsetArtist}
+                    onMouseDown={onMouseDownPreventDefault}>
+                    Previous...
+                </div>}
             {artistItems}
+            {artistItems && offsetArtist + 5 < limitArtist &&
+                <div 
+                    className="main-entry-details search-scroll-buttons"
+                    onClick={onClickIncreaseOffsetArtist}
+                    onMouseDown={onMouseDownPreventDefault}>
+                Next...
+                </div>}
             <p className="main-title">Albums</p>
+            {offsetAlbum > 0 &&
+                <div 
+                    className="main-entry-details search-scroll-buttons"
+                    onClick={onClickDecreaseOffsetAlbum}
+                    onMouseDown={onMouseDownPreventDefault}>
+                    Previous...
+                </div>}
             {albumItems}
+            {albumItems && offsetAlbum + 5 < limitAlbum &&
+                <div 
+                    className="main-entry-details search-scroll-buttons"
+                    onClick={onClickIncreaseOffsetAlbum}
+                    onMouseDown={onMouseDownPreventDefault}>
+                    Next...
+                </div>}
         </div>
     );
 }

@@ -4,19 +4,21 @@ import DeleteButton from './DeleteButton';
 import './Entry.css';
 
 function Entry(props) {
-    const { mainName, subName, imageUrl, isSearchResult, hasSubsection, subsection, hasDeleteButton } = props;
+    const { mainName, subName, imageUrl, isSearchResult, hasSubsection, subsection, hasDeleteButton, setQuery, setResultVisible } = props;
     const [ showSubsection, setShowSubsection ] = useState(false);
 
     const onClickShowSubsection = () => setShowSubsection(!showSubsection);
-    const onMouseDownPreventDefault = (e) => e.preventDefault();
+    const onClickSetVisibleFalse = () => {
+        setResultVisible(false);
+        setQuery("");
+    };
 
     return (
-        <div key={mainName + subName} className="main-entry">
+        <div className="main-entry">
             <div className="main-entry-details">
                 <div
                     className="main-entry-details-left"
-                    onMouseDown={isSearchResult && hasSubsection ? onMouseDownPreventDefault : undefined}
-                    onClick={hasSubsection ? onClickShowSubsection : undefined}>
+                    onClick={isSearchResult && !hasSubsection ? onClickSetVisibleFalse : onClickShowSubsection}>
                     <FoldButton 
                         isVisible={hasSubsection}
                         showSubsection={showSubsection} />
