@@ -6,7 +6,8 @@ import './Entry.css';
 function Entry(props) {
     const { mainName,
             subName, 
-            artist,
+            artistName,
+            artistID,
             imageUrl, 
             isSearchResult, 
             hasSubsection, 
@@ -20,21 +21,14 @@ function Entry(props) {
 
     const onClickShowSubsection = () => setShowSubsection(!showSubsection);
     const onClickAddAlbum = () => {
-        const artistID = artist.id;
-        const artistName = artist.name;
-
         let newPlaylist = {...playlist};
         if (artistID in playlist) {
-            let prevSubsection = newPlaylist[artistID]['subsection'];
-            const title = `(album) ${mainName}`;
-            if (!(prevSubsection.includes(title))) {
-                prevSubsection.push(`${title}`);
-            }
+            newPlaylist[artistID]['subsection'].add(`(album) ${mainName}`);
         } else {
             newPlaylist[artistID] = {
                 name: artistName,
                 imageUrl: imageUrl,
-                subsection: [`(album) ${mainName}`],
+                subsection: new Set([`(album) ${mainName}`]),
             }
         };
         setPlaylist(newPlaylist);
@@ -61,7 +55,11 @@ function Entry(props) {
                         <p>{subName}</p>
                     </div>
                 </div>
-                {hasDeleteButton && <DeleteButton />}
+                {hasDeleteButton && 
+                    <DeleteButton 
+                        artistID={artistID}
+                        playlist={playlist}
+                        setPlaylist={setPlaylist} />}
             </div>
             {showSubsection && subsection}
         </div>

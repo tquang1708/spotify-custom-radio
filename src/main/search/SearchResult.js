@@ -42,12 +42,13 @@ function SearchResult(props) {
     const limitArtist = artistResults ? artistResults.length : 0;
     const limitAlbum = albumResults ? albumResults.length : 0;
 
-    const subsectionTitles = ["Add Discography", "Add Top Tracks"];
+    const subsectionTitles = new Set(["Add Discography", "Add Top Tracks"]);
     const artistItems = artistResults?.slice(offsetArtist, offsetArtist + 5).map((artist) => 
         <Entry
             key={"search result" + artist["id"]}
             mainName={artist["name"]}
             subName={artist["genres"].map((g) => g.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ')}
+            artistID={artist["id"]}
             imageUrl={artist.images?.at(-1)?.url}
             isSearchResult={true}
             hasSubsection={true}
@@ -69,7 +70,8 @@ function SearchResult(props) {
     const albumItems = albumResults?.slice(offsetAlbum, offsetAlbum + 5).map((album) => 
         <Entry
             key={"search result" + album["id"]}
-            artist={album.artists?.at(0)}
+            artistName={album.artists?.at(0).name}
+            artistID={album.artists?.at(0).id}
             mainName={album["name"]}
             subName={album["artists"].map((a) => a["name"]).join(', ')}
             imageUrl={album.images?.at(0)?.url}

@@ -3,7 +3,7 @@ import Subsection from '../common/Subsection';
 import './Playlist.css';
 
 function Playlist(props) {
-    const { playlist } = props;
+    const { playlist, setPlaylist } = props;
 
     let playlistItems;
     if (Object.keys(playlist).length === 0) {
@@ -14,10 +14,19 @@ function Playlist(props) {
     } else {
         playlistItems = Object.keys(playlist).map((i) => {
             const subsectionTitles = playlist[i]['subsection'];
-            const subsection = <Subsection subsectionTitles={subsectionTitles.sort()} hasDeleteButton={true} />;
+            const subsection = 
+                <Subsection 
+                    subsectionTitles={[...subsectionTitles].sort()}
+                    hasDeleteButton={true}
+                    artistID={i}
+                    playlist={playlist}
+                    setPlaylist={setPlaylist} />;
     
             return <Entry
                 key={"playlist" + i}
+                artistID={i}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
                 mainName={playlist[i]['name']}
                 imageUrl={playlist[i]['imageUrl']}
                 hasSubsection={true}

@@ -18,15 +18,12 @@ function SubsectionItem(props) {
         const playlistTitle = title.split(" ").slice(1).join(" ");
 
         if (artistID in playlist) {
-            let prevSubsection = newPlaylist[artistID]['subsection'];
-            if (!(prevSubsection.includes(playlistTitle))) {
-                prevSubsection.push(`${playlistTitle}`);
-            }
+            newPlaylist[artistID]['subsection'].add(`${playlistTitle}`);
         } else {
             newPlaylist[artistID] = {
                 name: artistName,
                 imageUrl: artistUrl,
-                subsection: [`${playlistTitle}`],
+                subsection: new Set([`${playlistTitle}`]),
             }
         };
         setPlaylist(newPlaylist);
@@ -40,7 +37,13 @@ function SubsectionItem(props) {
             className="main-entry-subsection-item"
             onClick={isSearchResult ? onClickAddItem : undefined}>
             {title}
-            {hasDeleteButton && <DeleteButton isSubsection={true} />}
+            {hasDeleteButton &&
+                <DeleteButton 
+                    artistID={artistID}
+                    isSubsection={true}
+                    title={title}
+                    playlist={playlist}
+                    setPlaylist={setPlaylist} />}
         </div>
     );
 }
@@ -57,7 +60,7 @@ function Subsection(props) {
             setQuery,
             setResultVisible } = props
 
-    const subsectionItems = subsectionTitles.map((title) =>
+    const subsectionItems = [...subsectionTitles].map((title) =>
         <SubsectionItem 
             key={"search result subsection" + artistID + title}
             artistID={artistID}

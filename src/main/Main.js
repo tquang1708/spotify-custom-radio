@@ -12,7 +12,7 @@ function Main() {
         <div className="main">
             <UserInfo />
             <Search playlist={playlist} setPlaylist={setPlaylist} />
-            <Playlist key={playlist} playlist={playlist} />
+            <Playlist key={playlist} playlist={playlist} setPlaylist={setPlaylist} />
             <Submit />
         </div>
     );
