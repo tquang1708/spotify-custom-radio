@@ -13,7 +13,7 @@ function Submit() {
                     checked={duplicateChecked}
                     onClick={onClickUpdateValue}
                 />
-                <div onClick={onClickUpdateValue}>Include Duplicate?</div>
+                <div onClick={onClickUpdateValue}>Include Duplicate Track?</div>
             </div>
             <div className="submit-button main-component">Submit</div>
         </div>

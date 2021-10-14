@@ -45,16 +45,20 @@ function SearchResult(props) {
     const subsectionTitles = ["Add Discography", "Add Top Tracks"];
     const artistItems = artistResults?.slice(offsetArtist, offsetArtist + 5).map((artist) => 
         <Entry
-            key={artist["id"]}
+            key={"search result" + artist["id"]}
             mainName={artist["name"]}
             subName={artist["genres"].map((g) => g.split(' ').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')).join(', ')}
             imageUrl={artist.images?.at(-1)?.url}
             isSearchResult={true}
             hasSubsection={true}
             subsection={<Subsection
-                id={artist["id"]}
+                artistID={artist["id"]}
+                artistName={artist["name"]}
+                artistUrl={artist.images?.at(-1)?.url}
                 subsectionTitles={subsectionTitles}
                 isSearchResult={true}
+                playlist={playlist}
+                setPlaylist={setPlaylist}
                 setQuery={setQuery}
                 setResultVisible={setResultVisible} />}
             playlist={playlist}
@@ -64,15 +68,16 @@ function SearchResult(props) {
     );
     const albumItems = albumResults?.slice(offsetAlbum, offsetAlbum + 5).map((album) => 
         <Entry
-            key={album["id"]} 
+            key={"search result" + album["id"]}
+            artist={album.artists?.at(0)}
             mainName={album["name"]}
             subName={album["artists"].map((a) => a["name"]).join(', ')}
-            imageUrl={album.images?.at(-1)?.url}
+            imageUrl={album.images?.at(0)?.url}
             isSearchResult={true}
             hasSubsection={false}
-            setResultVisible={setResultVisible}
             playlist={playlist}
             setPlaylist={setPlaylist}
+            setResultVisible={setResultVisible}
             setQuery={setQuery}
         />
     );

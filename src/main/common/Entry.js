@@ -4,11 +4,40 @@ import DeleteButton from './DeleteButton';
 import './Entry.css';
 
 function Entry(props) {
-    const { mainName, subName, imageUrl, isSearchResult, hasSubsection, subsection, hasDeleteButton, setQuery, setResultVisible } = props;
+    const { mainName,
+            subName, 
+            artist,
+            imageUrl, 
+            isSearchResult, 
+            hasSubsection, 
+            subsection, 
+            hasDeleteButton, 
+            playlist, 
+            setPlaylist, 
+            setQuery, 
+            setResultVisible } = props;
     const [ showSubsection, setShowSubsection ] = useState(false);
 
     const onClickShowSubsection = () => setShowSubsection(!showSubsection);
-    const onClickSetVisibleFalse = () => {
+    const onClickAddAlbum = () => {
+        const artistID = artist.id;
+        const artistName = artist.name;
+
+        let newPlaylist = {...playlist};
+        if (artistID in playlist) {
+            let prevSubsection = newPlaylist[artistID]['subsection'];
+            const title = `(album) ${mainName}`;
+            if (!(prevSubsection.includes(title))) {
+                prevSubsection.push(`${title}`);
+            }
+        } else {
+            newPlaylist[artistID] = {
+                name: artistName,
+                imageUrl: imageUrl,
+                subsection: [`(album) ${mainName}`],
+            }
+        };
+        setPlaylist(newPlaylist);
         setResultVisible(false);
         setQuery("");
     };
@@ -18,7 +47,7 @@ function Entry(props) {
             <div className="main-entry-details">
                 <div
                     className="main-entry-details-left"
-                    onClick={isSearchResult && !hasSubsection ? onClickSetVisibleFalse : onClickShowSubsection}>
+                    onClick={isSearchResult && !hasSubsection ? onClickAddAlbum : onClickShowSubsection}>
                     <FoldButton 
                         isVisible={hasSubsection}
                         showSubsection={showSubsection} />

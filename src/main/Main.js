@@ -6,13 +6,13 @@ import Submit from './submit/Submit';
 import './Main.css';
 
 function Main() {
-    const [ playlist, setPlaylist ] = useState([]);
+    const [ playlist, setPlaylist ] = useState({});
 
     return (
         <div className="main">
             <UserInfo />
             <Search playlist={playlist} setPlaylist={setPlaylist} />
-            <Playlist playlist={playlist} setPlaylist={setPlaylist} />
+            <Playlist key={playlist} playlist={playlist} />
             <Submit />
         </div>
     );
