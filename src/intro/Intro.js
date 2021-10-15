@@ -27,17 +27,14 @@ function Intro() {
 
     sessionStorage.setItem('spt_auth_state', spotifyState);
 
-    let disclaimer = "Created by Quang Tran at Bennington College. Forward all bug reports and/or "
-    disclaimer += "complaints to <a href={}>here</a>"
-
     return (
         <div className="center-text">
             <div className="main-title ">
                 <a href={authorizeURL.href}>
                     Login to Spotify
-                </a> &nbsp;to begin
+                </a>&nbsp;to begin
             </div>
-            <Footer footerText={} />
+            <Footer selfAdvertising={true} />
         </div>
     );
 }

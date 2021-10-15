@@ -3,63 +3,15 @@ import handleTokenExpiry from '../HandleTokenExpiry';
 import { options } from '../../options';
 import './Submit.css';
 
-async function handleRequest(fetchURL, requestOptions) {
-    let response;
-    while (true) {
-        response = await fetch(fetchURL.href, requestOptions).catch(error => {console.log(error)});
-        if (response.ok) {
-            break;
-        } else {
-            // too many requests
-            if (response.status === 429) {
-                const timeout = parseInt(response.headers.get("retry-after"), 10);
-                await new Promise(r => setTimeout(r, timeout));
-            } else if (response.status === 403) {
-                window.sessionStorage.removeItem("authorized");
-                window.sessionStorage.removeItem("access_token");
-                window.sessionStorage.removeItem("access_token_timestamp");
-                alert("Your login token has expired, probably. Please login again.");
-                window.location.reload();
-            }
-        }
-    }
-
-    return response;
-}
-
-async function getAlbumTrackURIs(requestOptions, albumID) {
-    let trackURIs = new Set([]);
-
-    const fetchURL = new URL(`https://api.spotify.com/v1/albums/${albumID}/tracks`);
-    fetchURL.searchParams.set('market', 'from_token');
-    fetchURL.searchParams.set('limit', '50');
-
-    let offset = 0;
-    while (true) {
-        fetchURL.searchParams.set('offset', offset);
-
-        const response = await handleRequest(fetchURL, requestOptions);
-        const data = await response.json().catch(error => console.log(error));
-        const items = data["items"];
-
-        items.forEach((track) => {
-            trackURIs.add(track["uri"]);
-        });
-
-        if (items.length < 50) {
-            break;
-        } else {
-            offset += 50;
-        }
-    }
-
-    return trackURIs;
-}
-
 function Submit(props) {
-    const { userID, playlist, setAppInUsage } = props;
+    const { userID, 
+            playlist, 
+            playlistName, 
+            setPlaylistName, 
+            setPlaylistLink,
+            setAppInUsage, 
+            setPlaylistCreated } = props;
     const [ checked, setChecked ] = useState(false);
-    const [ playlistName, setPlaylistName ] = useState("");
     const onClickUpdateValue = () => setChecked(!checked);
 
     const onClickSubmit = async () => {
@@ -146,6 +98,7 @@ function Submit(props) {
 
                 // make the playlist
                 const finalPlaylistName = playlistName ? playlistName : "Custom Radio Station";
+                setPlaylistName(finalPlaylistName);
                 const createPlaylistJSON = {
                     name: finalPlaylistName,
                     public: checked,
@@ -163,6 +116,7 @@ function Submit(props) {
                 const response = await handleRequest(createURL, createRequestOptions);
                 const data = await response.json().catch(error => console.log(error));
                 const playlistID = data["id"];
+                setPlaylistLink(data["external_urls"]["spotify"]);
 
                 let trackURIIndex = 0;
                 const trackURIArray = Array.from(trackURIs);
@@ -186,6 +140,9 @@ function Submit(props) {
                     trackURIIndex += 100;
                 }
             }
+
+            // update finished state
+            setPlaylistCreated(true);
         }
     };
 
@@ -223,6 +180,59 @@ function Submit(props) {
             </div>
         </div>
     );
+}
+
+async function handleRequest(fetchURL, requestOptions) {
+    let response;
+    while (true) {
+        response = await fetch(fetchURL.href, requestOptions).catch(error => {console.log(error)});
+        if (response.ok) {
+            break;
+        } else {
+            // too many requests
+            if (response.status === 429) {
+                const timeout = parseInt(response.headers.get("retry-after"), 10);
+                await new Promise(r => setTimeout(r, timeout));
+            } else if (response.status === 403) {
+                window.sessionStorage.removeItem("authorized");
+                window.sessionStorage.removeItem("access_token");
+                window.sessionStorage.removeItem("access_token_timestamp");
+                alert("Your login token has expired, probably. Please login again.");
+                window.location.reload();
+            }
+        }
+    }
+
+    return response;
+}
+
+async function getAlbumTrackURIs(requestOptions, albumID) {
+    let trackURIs = new Set([]);
+
+    const fetchURL = new URL(`https://api.spotify.com/v1/albums/${albumID}/tracks`);
+    fetchURL.searchParams.set('market', 'from_token');
+    fetchURL.searchParams.set('limit', '50');
+
+    let offset = 0;
+    while (true) {
+        fetchURL.searchParams.set('offset', offset);
+
+        const response = await handleRequest(fetchURL, requestOptions);
+        const data = await response.json().catch(error => console.log(error));
+        const items = data["items"];
+
+        items.forEach((track) => {
+            trackURIs.add(track["uri"]);
+        });
+
+        if (items.length < 50) {
+            break;
+        } else {
+            offset += 50;
+        }
+    }
+
+    return trackURIs;
 }
 
 export default Submit;

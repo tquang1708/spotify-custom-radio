@@ -1,5 +1,16 @@
 function Footer(props) {
-    const footerText = props.footerText;
+    const { footerText, selfAdvertising } = props;
+
+    let text;
+    if (selfAdvertising) {
+        const githubURL = "https://github.com/tquang1708/spotify-custom-radio/issues";
+        text =
+        <div>
+            Created by Quang Tran at Bennington College. Forward all your bug reports and/or suggestions to <a href={githubURL}>here.</a>
+        </div>
+    } else {
+        text = <div>{footerText}</div>;
+    }
 
     return (
         <div
@@ -11,8 +22,8 @@ function Footer(props) {
                 right: "5px",
                 fontSize: "0.7em",
                 textAlign: "right"
-            }}>
-            {footerText}
+            }} >
+            {text}
         </div>
     );
 }
