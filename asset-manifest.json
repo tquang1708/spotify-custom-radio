@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/spotify-custom-radio/static/css/main.8a130fbb.chunk.css",
-    "main.js": "/spotify-custom-radio/static/js/main.39d26394.chunk.js",
-    "main.js.map": "/spotify-custom-radio/static/js/main.39d26394.chunk.js.map",
+    "main.js": "/spotify-custom-radio/static/js/main.297cd233.chunk.js",
+    "main.js.map": "/spotify-custom-radio/static/js/main.297cd233.chunk.js.map",
     "runtime-main.js": "/spotify-custom-radio/static/js/runtime-main.87acf8ba.js",
     "runtime-main.js.map": "/spotify-custom-radio/static/js/runtime-main.87acf8ba.js.map",
     "static/js/2.e4442b2b.chunk.js": "/spotify-custom-radio/static/js/2.e4442b2b.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.87acf8ba.js",
     "static/js/2.e4442b2b.chunk.js",
     "static/css/main.8a130fbb.chunk.css",
-    "static/js/main.39d26394.chunk.js"
+    "static/js/main.297cd233.chunk.js"
   ]
 }
