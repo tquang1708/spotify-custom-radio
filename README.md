@@ -1,70 +1,38 @@
-# Getting Started with Create React App
+# Spotify Custom Radio
+
+Custom playlist generator for self-made "radio station" through Spotify API. The app allows user to create playlists through adding artists' entire discography, top tracks or specific albums.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Local Build
 
-In the project directory, you can run:
+### I) Set up Spotify Developer app and callback
 
-### `yarn start`
+1) Go to the Spotify Developer dashboard at https://developer.spotify.com/dashboard/, then Log In with your Spotify account.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2) On the Dashboard, click "Create An App", then name/describe it however you prefer. Remember to agree with Spotify's ToS.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+3) On the app's overview screen, copy the app's Client ID, then put it in the `client_id` field in the `src/options.js` file.
 
-### `yarn test`
+4) Still on the app's overview screen, click "Edit Settings", then in the "Redirect URIs" field, type `http://localhost:3000/callback`, click "Add", then "Save".
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### II) Launch the app
 
-### `yarn build`
+5) Run `npm install` to install all dependencies, then `npm start` in the root directory, or yarn, depending on the day of the week (in other words I am not sure of the differences myself). Aside from React and React Router, this app doesn't have any other dependencies.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+6) The app should now be available for usage at `http://localhost:3000`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+7) There are settings you could change in the `src/options.js` file.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    - `client_id`: This is your app's client ID, as set in earlier steps.
+    - `redirect_uri`: The URI Spotify redirects to after authorizing the user. I am currently using the `/callback` route to handle callback.
+    - `playlist_description`: The default description given to playlists created through this app.
+    - `enable_rate_limit`: Enables whether the app will reject requests to create playlists that are too large.
+    - `entry_count_limit`: If rate limiting is enabled, prevents the user from creating playlists with more than 50 separate artist counts.
+    - `album_count_limit`: If rate limiting is enabled, prevents the user from creating playlists with more than 200 albums in total,
 
-### `yarn eject`
+## Notes and Disclaimer
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- There currently is no testing on this app, and I do not plan to write tests for the app at least for the foreseeable future. I definitely would look into it if others add more features to the app, and test coverage becomes necessary, but for now I do not plan to add any extra feature to the app.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- The "Discography" option only includes albums, EPs and singles from the artist. This does not include compilations or other releases that an artist appears on, as including those will inflate the album count by too many.
