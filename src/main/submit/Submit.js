@@ -5,6 +5,7 @@ import './Submit.css';
 
 function Submit(props) {
     const { userID, 
+            userPlaylists,
             playlist, 
             playlistName, 
             setTracksFetched,
@@ -13,8 +14,10 @@ function Submit(props) {
             setPlaylistLink,
             setAppInUsage, 
             setPlaylistCreated } = props;
-    const [ checked, setChecked ] = useState(false);
-    const onClickUpdateValue = () => setChecked(!checked);
+    const [ createPlaylist, setCreatePlaylist ] = useState(true);
+    const [ appendToPlaylistID, setAppendToPlaylistID ] = useState("");
+    const [ privatePlaylist, setPrivatePlaylist ] = useState(true);
+    const [ selectValue, setSelectValue ] = useState("create private");
 
     const onClickSubmit = async () => {
         handleTokenExpiry();
@@ -102,26 +105,44 @@ function Submit(props) {
                 setTracksFetchFinished(true);
 
                 // make the playlist
-                const finalPlaylistName = playlistName ? playlistName : "Custom Radio Station";
-                setPlaylistName(finalPlaylistName);
-                const createPlaylistJSON = {
-                    name: finalPlaylistName,
-                    public: checked,
-                    description: options["playlist_description"]
+                let playlistID = "";
+                if (createPlaylist) {
+                    const finalPlaylistName = playlistName ? playlistName : "Custom Radio Station";
+                    setPlaylistName(finalPlaylistName);
+                    const createPlaylistJSON = {
+                        name: finalPlaylistName,
+                        public: !privatePlaylist,
+                        description: options["playlist_description"]
+                    }
+                    const createRequestOptions = {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(createPlaylistJSON)
+                    };
+                    const createURL = new URL(`https://api.spotify.com/v1/users/${userID}/playlists`);
+                    const response = await handleRequest(createURL, createRequestOptions);
+                    const data = await response.json().catch(error => console.log(error));
+                    playlistID = data["id"];
+                    setPlaylistLink(data["external_urls"]["spotify"]);
+                } else {
+                    // or append
+                    playlistID = appendToPlaylistID ? appendToPlaylistID : Object.keys(userPlaylists)[0]
+
+                    const getRequestOptions = {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'Bearer ' + accessToken,
+                        }
+                    }
+                    const getPlaylistURL = new URL(`https://api.spotify.com/v1/playlists/${playlistID}`);
+                    const response = await handleRequest(getPlaylistURL, getRequestOptions);
+                    const data = await response.json().catch(error => console.log(error));
+                    setPlaylistName(data["name"]);
+                    setPlaylistLink(data["external_urls"]["spotify"]);
                 }
-                const createRequestOptions = {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(createPlaylistJSON)
-                };
-                const createURL = new URL(`https://api.spotify.com/v1/users/${userID}/playlists`);
-                const response = await handleRequest(createURL, createRequestOptions);
-                const data = await response.json().catch(error => console.log(error));
-                const playlistID = data["id"];
-                setPlaylistLink(data["external_urls"]["spotify"]);
 
                 // populate the playlist
                 const trackURIArray = Array.from(trackURIs);
@@ -153,9 +174,33 @@ function Submit(props) {
     };
 
     const onChangeUpdatePlaylistName = e => setPlaylistName(e.target.value);
+    const onChangeUpdateAppendPlaylistID = (e) => {
+        setPlaylistName(userPlaylists[e.target.value]);
+        setAppendToPlaylistID(e.target.value);
+    };
+    const onChangeUpdateValue = (e) => {
+        if (e.target.value === "append") {
+            if (Object.keys(userPlaylists).length === 0) {
+                alert("You have no playlist to append to yet.");
+            } else {
+                setSelectValue(e.target.value);
+                setCreatePlaylist(false);
+            }
+        } else {
+            setSelectValue(e.target.value);
+            setCreatePlaylist(true);
+            setPlaylistName("");
+            if (e.target.value.includes("private")) {
+                setPrivatePlaylist(true);
+            } else {
+                setPrivatePlaylist(false);
+            }
+        }
+    };
 
-    return (
-        <div className="submit">
+    let playlistSelect;
+    if (createPlaylist) {
+        playlistSelect = 
             <input
                 type="text"
                 value={playlistName}
@@ -165,19 +210,29 @@ function Submit(props) {
                     height: "25px"
                 }}
             />
-            <div className="submit-public">
-                <input
-                    type="checkbox"
-                    checked={checked}
-                    onClick={onClickUpdateValue}
-                />
-                <div
-                    onClick={onClickUpdateValue}
-                    style={{
-                        cursor: "pointer"
-                    }}>
-                    Make Playlist Public?
-                </div>
+    } else {
+        const playlistOptions = Object.keys(userPlaylists).map((playlistID) => {
+            return <option key={"append" + playlistID} value={playlistID}>{userPlaylists[playlistID]}</option>
+        });
+        playlistSelect = 
+            <select
+                value={appendToPlaylistID}
+                onChange={onChangeUpdateAppendPlaylistID}>
+                {playlistOptions}
+            </select>
+    }
+
+    return (
+        <div className="submit">
+            <div className="submit-options">
+                <select
+                    value={selectValue}
+                    onChange={onChangeUpdateValue}>
+                    <option value="create private">Create a new Private Playlist</option>
+                    <option value="create public">Create a new Public Playlist</option>
+                    <option value="append">Append to an existing Playlist</option>
+                </select>
+                {playlistSelect}
             </div>
             <div 
                 className="submit-button main-component"

@@ -60,8 +60,8 @@ function Outro(props) {
         return (
             <div className="center-element">
                 <p className="center-text">
-                    Playlist <a href={playlistLink} target="_blank" rel="noreferrer" >{playlistName}</a> Created!
-                    <Link to="/" onClick={onClickResetState}>&nbsp;Create Another playlist?</Link>
+                    Playlist <a href={playlistLink} target="_blank" rel="noreferrer" >{playlistName}</a> Finished!
+                    <Link to="/" onClick={onClickResetState}>&nbsp;Start Again?</Link>
                 </p>
                 <Footer selfAdvertising={true} />
             </div>

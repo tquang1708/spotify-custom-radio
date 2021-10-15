@@ -10,6 +10,7 @@ import './Main.css';
 function Main() {
     const [ playlist, setPlaylist ] = useState({});
     const [ userID, setUserID ] = useState("");
+    const [ userPlaylists, setUserPlaylists ] = useState({});
     const [ tracksFetched, setTracksFetched ] = useState(0);
     const [ tracksFetchFinished, setTracksFetchFinished ] = useState(false);
     const [ playlistName, setPlaylistName ] = useState("");
@@ -35,7 +36,8 @@ function Main() {
 
         return (<div className="main">
             <UserInfo 
-                setUserID={setUserID} />
+                setUserID={setUserID}
+                setUserPlaylists={setUserPlaylists} />
             <Search
                 playlist={playlist}
                 setPlaylist={setPlaylist} />
@@ -44,6 +46,7 @@ function Main() {
                 setPlaylist={setPlaylist} />
             <Submit
                 userID={userID}
+                userPlaylists={userPlaylists}
                 playlist={playlist}
                 playlistName={playlistName}
                 setTracksFetched={setTracksFetched}
