@@ -1,7 +1,17 @@
+@media (max-width: 800px) {
+    .main {
+        width: 100vw;
+    }    
+}
+@media (min-width: 800px) {
+    .main {
+        width: 60vw;
+    }
+}
+
 .main {
     display: flex;
     flex-direction: column;
-    width: 60vw;
 }
 
 .main-component {
