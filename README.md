@@ -6,6 +6,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Local Build
 
+### I) Create options.js
+
+0) Create a new file `src/options.js` with these default parameters:
+
+```javascript
+export const options = {
+    "client_id": "",
+    "redirect_uri": "http://localhost:3000/callback",
+    "playlist_description": "Your custom radio station, created from <insert url here>",
+    "enable_rate_limit": true,
+    "entry_count_limit": 50,
+    "album_count_limit": 200,
+}
+```
+
 ### I) Set up Spotify Developer app and callback
 
 1) Go to the Spotify Developer dashboard at https://developer.spotify.com/dashboard/, then Log In with your Spotify account.
