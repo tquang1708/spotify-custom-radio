@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Spotify Custom Radio",
+  "name": "Spotify Custom Radio station",
   "icons": [
     {
       "src": "favicon.ico",
