@@ -16,7 +16,7 @@ function Subsection(props) {
     if (isSearchResult) {
         subsectionItems = [true, false].map((i) => {
             return <SearchSubsection 
-		key={"search subsection" + artistID + i}
+		        key={"search subsection" + artistID + i}
                 playlist={playlist}
                 artistID={artistID}
                 artistName={artistName}
@@ -34,7 +34,7 @@ function Subsection(props) {
                     key={"playlist subsection" + artistID + "discography"}
                     artistID={artistID}
                     title={"Discography"}
-		    isDiscography={true}
+		            isDiscography={true}
                     playlist={playlist}
                     setPlaylist={setPlaylist}
                 />
@@ -46,7 +46,7 @@ function Subsection(props) {
                         key={"playlist subsection" + artistID + "toptracks"}
                         artistID={artistID}
                         title={"Top Tracks"}
-			isDiscography={false}
+			            isDiscography={false}
                         playlist={playlist}
                         setPlaylist={setPlaylist}
                     />
@@ -60,7 +60,7 @@ function Subsection(props) {
                         artistID={artistID}
                         albumID={albumID}
                         title={`(album) ${playlist[artistID]["albums"][albumID]}`}
-			isDiscography={false}
+			            isDiscography={false}
                         playlist={playlist}
                         setPlaylist={setPlaylist}
                     />

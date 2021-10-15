@@ -3,27 +3,26 @@ import './Button.css';
 function DeleteButton(props) {
     const {
         artistID,
-	albumID,
+	    albumID,
         isSubsection,
-	isDiscography,
+	    isDiscography,
         playlist,
-        setPlaylist,
-    } = props;
+        setPlaylist,} = props;
 
     const onClickDeleteItem = () => {
         let newPlaylist = {...playlist};
 
         if (!isDiscography && isSubsection) {
-	    if (albumID) {
-		delete newPlaylist[artistID]["albums"][albumID];
-	    } else {
-		newPlaylist[artistID]["topTracks"] = false;
-	    };
+            if (albumID) {
+                delete newPlaylist[artistID]["albums"][albumID];
+            } else {
+                newPlaylist[artistID]["topTracks"] = false;
+            };
 
-	    if (!(newPlaylist[artistID]["topTracks"]) 
-		    && Object.keys(newPlaylist[artistID]["albums"]).length === 0) {
-                delete newPlaylist[artistID];
-	    };
+            if (!(newPlaylist[artistID]["topTracks"]) 
+                && Object.keys(newPlaylist[artistID]["albums"]).length === 0) {
+                    delete newPlaylist[artistID];
+            };
         } else {
             delete newPlaylist[artistID];
         };

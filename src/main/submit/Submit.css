@@ -5,12 +5,13 @@
     align-items: baseline;
 }
 
-.submit-checkbox {
+.submit-public {
     color: var(--text-color);
+    background-color: var(--site-bg-color);
     display: flex;
     flex-direction: row;
-    align-items: center;
-    cursor: pointer;
+    align-items: baseline;
+    margin-left: 8px;
 }
 
 .main-component.submit-button {
