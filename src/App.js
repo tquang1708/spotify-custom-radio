@@ -16,10 +16,10 @@ function App() {
             <Route exact path="/">
                 {authorized || authorizedSession === "true" ? <Main /> : <Intro />}
             </Route>
-            <Route path="/error">
+            <Route path="/error/">
                 {hasError ? <Error /> : <Redirect to="/" />}
             </Route>
-            <Route path="/callback">
+            <Route path="/:access_token(access_token=.*)/">
                 <Callback
                     setAuthorized={setAuthorized}
                     setHasError={setHasError}

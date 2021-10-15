@@ -4,7 +4,8 @@ import { Redirect } from 'react-router-dom';
 function Callback(props) {
     const { setHasError, setAuthorized } = props;
 
-    const response = new URLSearchParams(window.location.hash.substring(1));
+    const response = new URLSearchParams(window.location.hash.substring(2));
+    console.log(response)
 
     const spotifyState = sessionStorage.getItem("spt_auth_state");
     const access_token = response.get("access_token");
@@ -30,7 +31,7 @@ function Callback(props) {
     if (valid) {
         return <Redirect to="/"/>
     } else {
-        return <Redirect to="/error"/>
+        return <Redirect to="/error/"/>
     };
 };
 
