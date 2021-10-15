@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### I) Create options.js
 
-0) Create a new file `src/options.js` with these default parameters:
+1) Create a new file `src/options.js` with these default parameters:
 
 ```javascript
 export const options = {
@@ -21,23 +21,23 @@ export const options = {
 }
 ```
 
-### I) Set up Spotify Developer app and callback
+### II) Set up Spotify Developer app and callback
 
-1) Go to the Spotify Developer dashboard at https://developer.spotify.com/dashboard/, then Log In with your Spotify account.
+2) Go to the Spotify Developer dashboard at https://developer.spotify.com/dashboard/, then Log In with your Spotify account.
 
-2) On the Dashboard, click "Create An App", then name/describe it however you prefer. Remember to agree with Spotify's ToS.
+3) On the Dashboard, click "Create An App", then name/describe it however you prefer. Remember to agree with Spotify's ToS.
 
-3) On the app's overview screen, copy the app's Client ID, then put it in the `client_id` field in the `src/options.js` file.
+4) On the app's overview screen, copy the app's Client ID, then put it in the `client_id` field in the `src/options.js` file.
 
-4) Still on the app's overview screen, click "Edit Settings", then in the "Redirect URIs" field, type `http://localhost:3000/callback`, click "Add", then "Save".
+5) Still on the app's overview screen, click "Edit Settings", then in the "Redirect URIs" field, type `http://localhost:3000/callback`, click "Add", then "Save".
 
-### II) Launch the app
+### III) Launch the app
 
-5) Run `npm install` to install all dependencies, then `npm start` in the root directory, or yarn, depending on the day of the week (in other words I am not sure of the differences myself). Aside from React and React Router, this app doesn't have any other dependencies.
+6) Run `npm install` to install all dependencies, then `npm start` in the root directory, or yarn, depending on the day of the week (in other words I am not sure of the differences myself). Aside from React and React Router, this app doesn't have any other dependencies.
 
-6) The app should now be available for usage at `http://localhost:3000`
+7) The app should now be available for usage at `http://localhost:3000`
 
-7) There are settings you could change in the `src/options.js` file.
+8) There are settings you could change in the `src/options.js` file.
 
     - `client_id`: This is your app's client ID, as set in earlier steps.
     - `redirect_uri`: The URI Spotify redirects to after authorizing the user. I am currently using the `/callback` route to handle callback.
