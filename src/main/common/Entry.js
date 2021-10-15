@@ -29,12 +29,14 @@ function Entry(props) {
                 newPlaylist[artistID]['albums'][albumID] = mainName;
             }
         } else {
+	    let newAlbum = {};
+	    newAlbum[albumID] = mainName;
             newPlaylist[artistID] = {
                 name: artistName,
                 imageUrl: imageUrl,
                 discography: false,
                 topTracks: false,
-                albums: {albumID: mainName},
+                albums: newAlbum,
             }
         };
         setPlaylist(newPlaylist);

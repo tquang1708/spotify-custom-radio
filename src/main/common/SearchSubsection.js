@@ -29,7 +29,7 @@ function SearchSubsection(props) {
                 imageUrl: artistUrl,
                 discography: isDiscography,
                 topTracks: !isDiscography,
-                albums: new Set([]),
+                albums: {},
             }
         };
         setPlaylist(newPlaylist);

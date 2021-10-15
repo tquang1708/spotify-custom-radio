@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { handleTokenExpiry } from '../HandleTokenExpiry';
 import Entry from '../common/Entry';
 import Subsection from '../common/Subsection';
 
@@ -15,8 +14,6 @@ function SearchResult(props) {
     const [ offsetAlbum, setOffsetAlbum ] = useState(0);
 
     useEffect(() => {
-        handleTokenExpiry();
-    
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',

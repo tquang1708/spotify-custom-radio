@@ -1,6 +1,5 @@
 import './UserInfo.css';
 import { useState, useEffect } from 'react';
-import { handleTokenExpiry } from '../HandleTokenExpiry';
 
 function UserInfo() {
     const handleLogout = () => {
@@ -13,7 +12,6 @@ function UserInfo() {
 
     const [ userName, setUserName ] = useState("");
     useEffect(() => {
-        handleTokenExpiry();
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',

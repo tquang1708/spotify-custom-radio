@@ -1,27 +1,6 @@
-import DeleteButton from "./DeleteButton";
 import SearchSubsection from "./SearchSubsection";
+import PlaylistSubsection from "./PlaylistSubsection";
 import './Subsection.css';
-
-function PlaylistSubsection(props) {
-    const { artistID,
-            albumID,
-            title,
-            playlist,
-            setPlaylist } = props
-
-    return (
-        <div 
-            className="main-entry-subsection-item">
-            {title}
-            <DeleteButton 
-                artistID={artistID}
-                albumID={albumID}
-                isSubsection={true}
-                playlist={playlist}
-                setPlaylist={setPlaylist} />
-        </div>
-    );
-}
 
 function Subsection(props) {
     const { artistID,
@@ -33,10 +12,11 @@ function Subsection(props) {
             setQuery,
             setResultVisible } = props
 
-    let subsectionItems;
+    let subsectionItems = [];
     if (isSearchResult) {
-        subsectionItems = [true, false].forEach((i) => {
-            <SearchSubsection 
+        subsectionItems = [true, false].map((i) => {
+            return <SearchSubsection 
+		key={"search subsection" + artistID + i}
                 playlist={playlist}
                 artistID={artistID}
                 artistName={artistName}
@@ -54,6 +34,7 @@ function Subsection(props) {
                     key={"playlist subsection" + artistID + "discography"}
                     artistID={artistID}
                     title={"Discography"}
+		    isDiscography={true}
                     playlist={playlist}
                     setPlaylist={setPlaylist}
                 />
@@ -65,11 +46,12 @@ function Subsection(props) {
                         key={"playlist subsection" + artistID + "toptracks"}
                         artistID={artistID}
                         title={"Top Tracks"}
+			isDiscography={false}
                         playlist={playlist}
                         setPlaylist={setPlaylist}
                     />
                 );
-            }
+            };
 
             Object.keys(playlist[artistID]["albums"]).forEach((albumID) => {
                 subsectionItems.push(
@@ -78,6 +60,7 @@ function Subsection(props) {
                         artistID={artistID}
                         albumID={albumID}
                         title={`(album) ${playlist[artistID]["albums"][albumID]}`}
+			isDiscography={false}
                         playlist={playlist}
                         setPlaylist={setPlaylist}
                     />

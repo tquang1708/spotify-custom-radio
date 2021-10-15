@@ -18,12 +18,27 @@ function Playlist(props) {
                     artistID={i}
                     playlist={playlist}
                     setPlaylist={setPlaylist} />;
+	
+	    let subName = "";
+	    if (playlist[i]['discography']) {
+		subName = "Discography";
+	    } else {
+		if (playlist[i]['topTracks']) {
+		    subName = subName + "Top Tracks, ";
+		};
+
+		Object.values(playlist[i]['albums']).forEach((album) => {
+		    subName = subName + "(album) " + album + ", ";
+                });
+
+		subName = subName.slice(0, -2);
+	    }
     
             return <Entry
                 key={"playlist" + i}
                 artistID={i}
                 mainName={playlist[i]['name']}
-                subName={[...playlist[i]['subsection']].sort().join(', ')}
+                subName={subName}
                 imageUrl={playlist[i]['imageUrl']}
                 hasSubsection={true}
                 subsection={subsection}
