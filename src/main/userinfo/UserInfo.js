@@ -1,7 +1,10 @@
-import './UserInfo.css';
 import { useState, useEffect } from 'react';
+import handleTokenExpiry from '../HandleTokenExpiry';
+import './UserInfo.css';
 
-function UserInfo() {
+function UserInfo(props) {
+    const setUserID = props.setUserID;
+
     const handleLogout = () => {
         window.sessionStorage.removeItem("authorized");
         window.sessionStorage.removeItem("access_token");
@@ -12,6 +15,7 @@ function UserInfo() {
 
     const [ userName, setUserName ] = useState("");
     useEffect(() => {
+        handleTokenExpiry();
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',
@@ -22,12 +26,20 @@ function UserInfo() {
 
         fetch('https://api.spotify.com/v1/me', requestOptions)
             .then(response => response.json())
-            .then(data => setUserName(data["display_name"]))
+            .then(data => {
+                setUserName(data["display_name"]);
+                setUserID(data["id"]);
+            })
             .catch(error => {
                 setUserName("<error>");
                 console.log(error);
             });
-    }, []);
+
+        return () => {
+            setUserName("");
+            setUserID("");
+        };
+    }, [ setUserID ]);
 
     return (
         <div className="userinfo">

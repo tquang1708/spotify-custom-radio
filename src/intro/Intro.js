@@ -1,5 +1,6 @@
-import './Intro.css';
-import { authorize } from './authorize';
+import Footer from '../Footer';
+import '../App.css';
+import { options } from '../options';
 
 // taken from https://github.com/spotify/web-api-auth-examples/blob/master/implicit_grant/public/index.html
 function generateRandomString(length) {
@@ -15,21 +16,28 @@ function generateRandomString(length) {
 
 function Intro() {
     const spotifyState = generateRandomString(16);
+    const scope = "playlist-modify-private playlist-modify-public user-read-private";
+
     const authorizeURL = new URL(`https://accounts.spotify.com/authorize`);
-    authorizeURL.searchParams.append('client_id', authorize['client_id']);
-    authorizeURL.searchParams.append('redirect_uri', authorize['redirect_uri']);
-    authorizeURL.searchParams.append('response_type', 'token');
-    authorizeURL.searchParams.append('state', spotifyState);
-    authorizeURL.searchParams.append('scope', authorize['scope']);
+    authorizeURL.searchParams.set('client_id', options['client_id']);
+    authorizeURL.searchParams.set('redirect_uri', options['redirect_uri']);
+    authorizeURL.searchParams.set('response_type', 'token');
+    authorizeURL.searchParams.set('state', spotifyState);
+    authorizeURL.searchParams.set('scope', scope);
 
     sessionStorage.setItem('spt_auth_state', spotifyState);
 
+    let disclaimer = "Created by Quang Tran at Bennington College. Forward all bug reports and/or "
+    disclaimer += "complaints to <a href={}>here</a>"
+
     return (
-        <div className="main-title intro">
-            <a href={authorizeURL.href}>
-                Login to Spotify
-            </a>
-            &nbsp;to begin
+        <div className="center-text">
+            <div className="main-title ">
+                <a href={authorizeURL.href}>
+                    Login to Spotify
+                </a> &nbsp;to begin
+            </div>
+            <Footer footerText={} />
         </div>
     );
 }

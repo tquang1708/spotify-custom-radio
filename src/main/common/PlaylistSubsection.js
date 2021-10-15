@@ -4,7 +4,7 @@ function PlaylistSubsection(props) {
     const { artistID,
             albumID,
             title,
-	    isDiscography,
+	        isDiscography,
             playlist,
             setPlaylist } = props
 
@@ -16,7 +16,7 @@ function PlaylistSubsection(props) {
                 artistID={artistID}
                 albumID={albumID}
                 isSubsection={true}
-	    	isDiscography={isDiscography}
+	    	    isDiscography={isDiscography}
                 playlist={playlist}
                 setPlaylist={setPlaylist} />
         </div>

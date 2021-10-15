@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import handleTokenExpiry from '../HandleTokenExpiry';
 import Entry from '../common/Entry';
 import Subsection from '../common/Subsection';
 
@@ -14,6 +15,8 @@ function SearchResult(props) {
     const [ offsetAlbum, setOffsetAlbum ] = useState(0);
 
     useEffect(() => {
+        handleTokenExpiry();
+
         const accessToken = window.sessionStorage.getItem("access_token");
         const requestOptions = {
             method: 'GET',
@@ -22,9 +25,9 @@ function SearchResult(props) {
             }
         };
         const fetchURL = new URL('https://api.spotify.com/v1/search');
-        fetchURL.searchParams.append('q', query);
-        fetchURL.searchParams.append('market', 'from_token');
-        fetchURL.searchParams.append('type', 'artist,album');
+        fetchURL.searchParams.set('q', query);
+        fetchURL.searchParams.set('market', 'from_token');
+        fetchURL.searchParams.set('type', 'artist,album');
 
         fetch(fetchURL.href, requestOptions)
             .then(response => response.json())
@@ -34,10 +37,15 @@ function SearchResult(props) {
             })
             .catch(error => {
                 console.log(error);
-        })
+            })
 
         setOffsetArtist(0);
         setOffsetAlbum(0);
+
+        return () => {
+            setArtistResults([]);
+            setAlbumResults([]);
+        }
     }, [ query ]);
 
     const limitArtist = artistResults ? artistResults.length : 0;

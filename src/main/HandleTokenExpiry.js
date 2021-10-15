@@ -1,4 +1,4 @@
-export function handleTokenExpiry() {
+export default function handleTokenExpiry() {
     const accessTokenTimestamp = sessionStorage.getItem("access_token_timestamp");
     if (Date.now() - accessTokenTimestamp > 3300000) {
         window.sessionStorage.removeItem("authorized");
