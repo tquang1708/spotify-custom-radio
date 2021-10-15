@@ -5,7 +5,6 @@ function Callback(props) {
     const { setHasError, setAuthorized } = props;
 
     const response = new URLSearchParams(window.location.hash.substring(2));
-    console.log(response)
 
     const spotifyState = sessionStorage.getItem("spt_auth_state");
     const access_token = response.get("access_token");

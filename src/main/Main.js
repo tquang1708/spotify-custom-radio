@@ -10,6 +10,8 @@ import './Main.css';
 function Main() {
     const [ playlist, setPlaylist ] = useState({});
     const [ userID, setUserID ] = useState("");
+    const [ tracksFetched, setTracksFetched ] = useState(0);
+    const [ tracksFetchFinished, setTracksFetchFinished ] = useState(false);
     const [ playlistName, setPlaylistName ] = useState("");
     const [ playlistLink, setPlaylistLink ] = useState("");
     const [ appInUsage, setAppInUsage ] = useState(true);
@@ -44,6 +46,8 @@ function Main() {
                 userID={userID}
                 playlist={playlist}
                 playlistName={playlistName}
+                setTracksFetched={setTracksFetched}
+                setTracksFetchFinished={setTracksFetchFinished}
                 setPlaylistName={setPlaylistName}
                 setPlaylistLink={setPlaylistLink}
                 setAppInUsage={setAppInUsage}
@@ -54,6 +58,8 @@ function Main() {
     } else {
         return(
             <Outro 
+                tracksFetched={tracksFetched}
+                tracksFetchFinished={tracksFetchFinished}
                 playlistName={playlistName}
                 playlistLink={playlistLink}
                 playlistCreated={playlistCreated}

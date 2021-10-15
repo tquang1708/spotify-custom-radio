@@ -7,6 +7,8 @@ function Submit(props) {
     const { userID, 
             playlist, 
             playlistName, 
+            setTracksFetched,
+            setTracksFetchFinished,
             setPlaylistName, 
             setPlaylistLink,
             setAppInUsage, 
@@ -82,7 +84,7 @@ function Submit(props) {
             if (options["enable_rate_limit"] && albumIDs.size > options["album_count_limit"]) {
                 let alertMessage = "";
                 alertMessage += `There are more than ${options["album_count_limit"]} albums/eps/singles in your playlist. `
-                alertMessage += "(don't add Viper pls.) Please remove some items to free up the app.\n\n"
+                alertMessage += "Please remove some items to free up the app.\n\n"
                 alertMessage += "Note that you can turn off rate limiting on your local build by "
                 alertMessage += "turning off the respective option in options.js"
                 alert(alertMessage);
@@ -95,6 +97,9 @@ function Submit(props) {
                     const albumURIs = await getAlbumTrackURIs(getRequestOptions, albumID);
                     trackURIs = new Set([...trackURIs, ...albumURIs]);
                 }))
+
+                setTracksFetched(trackURIs.size);
+                setTracksFetchFinished(true);
 
                 // make the playlist
                 const finalPlaylistName = playlistName ? playlistName : "Custom Radio Station";
@@ -118,12 +123,15 @@ function Submit(props) {
                 const playlistID = data["id"];
                 setPlaylistLink(data["external_urls"]["spotify"]);
 
-                let trackURIIndex = 0;
+                // populate the playlist
                 const trackURIArray = Array.from(trackURIs);
                 const addTracksURL = new URL(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`);
-                while (trackURIIndex < trackURIArray.length) {
+
+                await Promise.all([...Array(Math.ceil(trackURIArray.length / 100)).keys()].map(async (chunkIndex) => {
+                    const trackURIIndex = chunkIndex * 100;
+                    const toAddURIs = trackURIArray.slice(trackURIIndex, trackURIIndex + 100);
                     const addTracksJSON = {
-                        uris: trackURIArray.slice(trackURIIndex, trackURIIndex + 100),
+                        uris: toAddURIs,
                     };
 
                     const addRequestOptions = {
@@ -135,10 +143,8 @@ function Submit(props) {
                         body: JSON.stringify(addTracksJSON)
                     };
                     const response = await handleRequest(addTracksURL, addRequestOptions);
-                    const data = await response.json().catch(error => console.log(error));
-
-                    trackURIIndex += 100;
-                }
+                    await response.json().catch(error => console.log(error));
+                }));
             }
 
             // update finished state

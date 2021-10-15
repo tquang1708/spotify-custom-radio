@@ -1,5 +1,11 @@
-.center-text {
+.center-element {
     align-self: center;
     border-bottom: 0;
+}
+
+.center-text {
+    color: var(--text-color);
+    font-weight: bold;
+    text-align: center;
     text-decoration: none;
 }

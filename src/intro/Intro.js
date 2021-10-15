@@ -28,8 +28,8 @@ function Intro() {
     sessionStorage.setItem('spt_auth_state', spotifyState);
 
     return (
-        <div className="center-text">
-            <div className="main-title ">
+        <div className="center-element">
+            <div className="center-text">
                 <a href={authorizeURL.href}>
                     Login to Spotify
                 </a>&nbsp;to begin

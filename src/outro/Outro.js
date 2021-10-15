@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Outro(props) {
-    const { playlistCreated, 
+    const { tracksFetched,
+            tracksFetchFinished,
+            playlistCreated, 
             playlistName, 
             playlistLink,
             setAppInUsage,
@@ -38,28 +40,26 @@ function Outro(props) {
         disclaimer += "or during times when the site is busy due to rate limiting on "
         disclaimer += "Spotify's API."
 
+        let flavorText;
+        if (!tracksFetchFinished) {
+            flavorText = <div>Fetching Tracks{loadingText}</div>;
+        } else {
+            flavorText = <div><span style={{color: "var(--highlight-color)"}}>{tracksFetched}</span> Tracks Found. Adding{loadingText}</div>;
+        }
+
         return (
-            <div className="center-text">
-                <p
-                    style={{
-                        color: "var(--text-color)",
-                        fontWeight: "bold",
-                        textAlign: "center"
-                    }}>
-                    Constructing <span style={{color: "var(--highlight-color)"}}>Playlist</span><br/>{loadingText}
+            <div className="center-element">
+                <p className="center-text">
+                    Constructing <span style={{color: "var(--highlight-color)"}}>Playlist</span>
+                    <br/>{flavorText}
                 </p>
                 <Footer footerText={disclaimer} />
             </div>
         );
     } else {
         return (
-            <div className="center-text">
-                <p
-                    style={{
-                        color: "var(--text-color)",
-                        fontWeight: "bold",
-                        textAlign: "center"
-                    }}>
+            <div className="center-element">
+                <p className="center-text">
                     Playlist <a href={playlistLink} target="_blank" rel="noreferrer" >{playlistName}</a> Created!
                     <Link to="/" onClick={onClickResetState}>&nbsp;Create Another playlist?</Link>
                 </p>
