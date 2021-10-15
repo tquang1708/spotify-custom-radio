@@ -200,10 +200,16 @@ async function handleRequest(fetchURL, requestOptions) {
                 const timeout = parseInt(response.headers.get("retry-after"), 10);
                 await new Promise(r => setTimeout(r, timeout));
             } else if (response.status === 403) {
+                let alertMessage = "";
+                alertMessage += "403 forbidden. Your login token has expired, probably. Please login again.\n\n";
+                alertMessage += "If this happened while you were adding tracks to the playlist, this might have been ";
+                alertMessage += "triggered because the playlist already has 10,000 items, which is Spotify's maximum ";
+                alertMessage += "permitted size for a playlist."
+
                 window.sessionStorage.removeItem("authorized");
                 window.sessionStorage.removeItem("access_token");
                 window.sessionStorage.removeItem("access_token_timestamp");
-                alert("Your login token has expired, probably. Please login again.");
+                alert(alertMessage);
                 window.location.reload();
             }
         }
