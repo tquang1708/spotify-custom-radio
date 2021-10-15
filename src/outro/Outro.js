@@ -1,14 +1,19 @@
 import Footer from '../Footer';
 import '../App.css';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Outro(props) {
-    const playlistCreated = playlistCreated;
+    const { playlistCreated, 
+            playlistName, 
+            playlistLink,
+            setAppInUsage,
+            setPlaylistCreated } = props;
     const [ loadingText, setLoadingText ] = useState(".");
 
     useEffect(() => {
         function updateLoadingText() {
-            if (loadingText.length === 3) {
+            if (loadingText.length === 5) {
                 setLoadingText(".");
             } else {
                 setLoadingText(loadingText + ".");
@@ -22,10 +27,15 @@ function Outro(props) {
         };
     }, [ loadingText ]);
 
+    const onClickResetState = () => {
+        setAppInUsage(true);
+        setPlaylistCreated(false);
+        window.location.reload();
+    };
+
     if (!playlistCreated) {
-        let disclaimer = "";
-        disclaimer += "It might take a while to build the playlist for larger playlists, "
-        disclaimer += "or during times when the site is busy, due to rate limiting on "
+        let disclaimer = "It might take a while to build the playlist for larger playlists ";
+        disclaimer += "or during times when the site is busy due to rate limiting on "
         disclaimer += "Spotify's API."
 
         return (
@@ -38,11 +48,24 @@ function Outro(props) {
                     }}>
                     Constructing <span style={{color: "var(--highlight-color)"}}>Playlist</span><br/>{loadingText}
                 </p>
-                <Footer footerText={disclaimer}/>
+                <Footer footerText={disclaimer} />
             </div>
         );
     } else {
-        //
+        return (
+            <div className="center-text">
+                <p
+                    style={{
+                        color: "var(--text-color)",
+                        fontWeight: "bold",
+                        textAlign: "center"
+                    }}>
+                    Playlist <a href={playlistLink} target="_blank" rel="noreferrer" >{playlistName}</a> Created!
+                    <Link to="/" onClick={onClickResetState}>&nbsp;Create Another playlist?</Link>
+                </p>
+                <Footer selfAdvertising={true} />
+            </div>
+        );
     }
 }
 

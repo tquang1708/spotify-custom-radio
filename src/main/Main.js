@@ -10,6 +10,8 @@ import './Main.css';
 function Main() {
     const [ playlist, setPlaylist ] = useState({});
     const [ userID, setUserID ] = useState("");
+    const [ playlistName, setPlaylistName ] = useState("");
+    const [ playlistLink, setPlaylistLink ] = useState("");
     const [ appInUsage, setAppInUsage ] = useState(true);
     const [ playlistCreated, setPlaylistCreated ] = useState(false);
 
@@ -41,6 +43,9 @@ function Main() {
             <Submit
                 userID={userID}
                 playlist={playlist}
+                playlistName={playlistName}
+                setPlaylistName={setPlaylistName}
+                setPlaylistLink={setPlaylistLink}
                 setAppInUsage={setAppInUsage}
                 setPlaylistCreated={setPlaylistCreated} />
             <Footer footerText={disclaimer} />
@@ -48,7 +53,12 @@ function Main() {
         );
     } else {
         return(
-            <Outro playlistCreated={playlistCreated} />
+            <Outro 
+                playlistName={playlistName}
+                playlistLink={playlistLink}
+                playlistCreated={playlistCreated}
+                setAppInUsage={setAppInUsage}
+                setPlaylistCreated={setPlaylistCreated} />
         );
     };
 }
