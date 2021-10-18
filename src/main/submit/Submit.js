@@ -3,6 +3,79 @@ import handleTokenExpiry from '../HandleTokenExpiry';
 import { options } from '../../options';
 import './Submit.css';
 
+async function handleRequest(fetchURL, requestOptions) {
+    let response;
+    while (true) {
+        response = await fetch(fetchURL.href, requestOptions).catch(error => {console.log(error)});
+        if (response.ok) {
+            break;
+        } else {
+            // too many requests
+            if (response.status === 429) {
+                const timeout = parseInt(response.headers.get("retry-after"), 10);
+                await new Promise(r => setTimeout(r, timeout));
+            } else if (response.status === 403) {
+                let alertMessage = "";
+                alertMessage += "403 forbidden. Your login token has expired, probably. Please login again.\n\n";
+                alertMessage += "If this happened while you were adding tracks to the playlist, this might have been ";
+                alertMessage += "triggered because the playlist already has 10,000 items, which is Spotify's maximum ";
+                alertMessage += "permitted size for a playlist."
+
+                window.sessionStorage.removeItem("authorized");
+                window.sessionStorage.removeItem("access_token");
+                window.sessionStorage.removeItem("access_token_timestamp");
+                alert(alertMessage);
+                window.location.reload();
+            }
+        }
+    }
+
+    return response;
+}
+
+async function getAlbumTrackURIs(requestOptions, albumID) {
+    let trackURIs = new Set([]);
+
+    const fetchURL = new URL(`https://api.spotify.com/v1/albums/${albumID}/tracks`);
+    fetchURL.searchParams.set('market', 'from_token');
+    fetchURL.searchParams.set('limit', '50');
+
+    let offset = 0;
+    while (true) {
+        fetchURL.searchParams.set('offset', offset);
+
+        const response = await handleRequest(fetchURL, requestOptions);
+        const data = await response.json().catch(error => console.log(error));
+        const items = data["items"];
+
+        items.forEach((track) => {
+            trackURIs.add(track["uri"]);
+        });
+
+        if (items.length < 50) {
+            break;
+        } else {
+            offset += 50;
+        }
+    }
+
+    return trackURIs;
+}
+
+// fisher-yates shuffle algo
+// taken from https://bost.ocks.org/mike/shuffle/
+function shuffle(array) {
+    var i;
+    for (i = array.length - 1; i > 0; i--) {
+        // pick a remaining element
+        const rem = Math.floor(Math.random() * (i + 1));
+        const temp = array[i];
+        array[i] = array[rem];
+        array[rem] = temp;
+    }
+    return array;
+}
+
 function Submit(props) {
     const { userID, 
             userPlaylists,
@@ -145,7 +218,7 @@ function Submit(props) {
                 }
 
                 // populate the playlist
-                const trackURIArray = Array.from(trackURIs);
+                const trackURIArray = shuffle(Array.from(trackURIs));
                 const addTracksURL = new URL(`https://api.spotify.com/v1/playlists/${playlistID}/tracks`);
 
                 await Promise.all([...Array(Math.ceil(trackURIArray.length / 100)).keys()].map(async (chunkIndex) => {
@@ -241,65 +314,6 @@ function Submit(props) {
             </div>
         </div>
     );
-}
-
-async function handleRequest(fetchURL, requestOptions) {
-    let response;
-    while (true) {
-        response = await fetch(fetchURL.href, requestOptions).catch(error => {console.log(error)});
-        if (response.ok) {
-            break;
-        } else {
-            // too many requests
-            if (response.status === 429) {
-                const timeout = parseInt(response.headers.get("retry-after"), 10);
-                await new Promise(r => setTimeout(r, timeout));
-            } else if (response.status === 403) {
-                let alertMessage = "";
-                alertMessage += "403 forbidden. Your login token has expired, probably. Please login again.\n\n";
-                alertMessage += "If this happened while you were adding tracks to the playlist, this might have been ";
-                alertMessage += "triggered because the playlist already has 10,000 items, which is Spotify's maximum ";
-                alertMessage += "permitted size for a playlist."
-
-                window.sessionStorage.removeItem("authorized");
-                window.sessionStorage.removeItem("access_token");
-                window.sessionStorage.removeItem("access_token_timestamp");
-                alert(alertMessage);
-                window.location.reload();
-            }
-        }
-    }
-
-    return response;
-}
-
-async function getAlbumTrackURIs(requestOptions, albumID) {
-    let trackURIs = new Set([]);
-
-    const fetchURL = new URL(`https://api.spotify.com/v1/albums/${albumID}/tracks`);
-    fetchURL.searchParams.set('market', 'from_token');
-    fetchURL.searchParams.set('limit', '50');
-
-    let offset = 0;
-    while (true) {
-        fetchURL.searchParams.set('offset', offset);
-
-        const response = await handleRequest(fetchURL, requestOptions);
-        const data = await response.json().catch(error => console.log(error));
-        const items = data["items"];
-
-        items.forEach((track) => {
-            trackURIs.add(track["uri"]);
-        });
-
-        if (items.length < 50) {
-            break;
-        } else {
-            offset += 50;
-        }
-    }
-
-    return trackURIs;
 }
 
 export default Submit;
