@@ -9,6 +9,7 @@
     cursor: default;
     padding-left: 35px;
     padding-right: 5px;
+    font-weight: bold;
 }
 
 .main-entry-subsection-item:hover {
