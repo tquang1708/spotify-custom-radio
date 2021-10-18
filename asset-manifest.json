@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/spotify-custom-radio/static/css/main.da8e3f9f.chunk.css",
+    "main.css": "/spotify-custom-radio/static/css/main.964a4116.chunk.css",
     "main.js": "/spotify-custom-radio/static/js/main.5b2f4f9d.chunk.js",
     "main.js.map": "/spotify-custom-radio/static/js/main.5b2f4f9d.chunk.js.map",
     "runtime-main.js": "/spotify-custom-radio/static/js/runtime-main.87acf8ba.js",
@@ -10,13 +10,13 @@
     "static/js/3.32fb0560.chunk.js": "/spotify-custom-radio/static/js/3.32fb0560.chunk.js",
     "static/js/3.32fb0560.chunk.js.map": "/spotify-custom-radio/static/js/3.32fb0560.chunk.js.map",
     "index.html": "/spotify-custom-radio/index.html",
-    "static/css/main.da8e3f9f.chunk.css.map": "/spotify-custom-radio/static/css/main.da8e3f9f.chunk.css.map",
+    "static/css/main.964a4116.chunk.css.map": "/spotify-custom-radio/static/css/main.964a4116.chunk.css.map",
     "static/js/2.5eaaecfc.chunk.js.LICENSE.txt": "/spotify-custom-radio/static/js/2.5eaaecfc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.87acf8ba.js",
     "static/js/2.5eaaecfc.chunk.js",
-    "static/css/main.da8e3f9f.chunk.css",
+    "static/css/main.964a4116.chunk.css",
     "static/js/main.5b2f4f9d.chunk.js"
   ]
 }
