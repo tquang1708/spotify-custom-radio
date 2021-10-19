@@ -42,7 +42,7 @@ function SearchSubsection(props) {
         <div 
             className="main-entry-subsection-item"
             onClick={onClickAddItem}>
-            {isDiscography ? "Add Discography" : "Add Top Tracks"}
+            {isDiscography ? "Add Discography" : "Add Top 10 Tracks"}
         </div>
     );   
 }
