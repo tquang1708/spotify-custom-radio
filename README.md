@@ -50,4 +50,4 @@ export const options = {
 
 - There currently is no testing on this app, and I do not plan to write tests for the app at least for the foreseeable future. I definitely would look into it if others add more features to the app, and test coverage becomes necessary, but for now I do not plan to add any extra feature to the app.
 
-- The "Discography" option only includes albums, EPs and singles from the artist. This does not include compilations or other releases that an artist appears on, as including those will inflate the album count by too many.
+- The "Discography" option only includes albums, EPs and singles from the artist. This does not include compilations or other releases that an artist appears on, as including those will inflate the album count by too many
