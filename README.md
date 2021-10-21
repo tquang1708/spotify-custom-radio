@@ -1,6 +1,6 @@
 # Spotify Custom Radio
 
-Custom playlist generator for self-made "radio station" through Spotify API. The app allows user to create playlists through adding artists' entire discography, top tracks or specific albums.
+Custom playlist generator for self-made "radio station" through Spotify API. The app allows user to create playlists through adding artists' entire discography, top tracks or specific albums. It's currently hosted at https://tquang1708.github.io/spotify-custom-radio/#/ (Spotify API in developer mode, so only email addresses added through the dashboard can utilize it).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
