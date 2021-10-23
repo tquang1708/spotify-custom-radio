@@ -6,7 +6,7 @@ function Footer(props) {
         const githubURL = "https://github.com/tquang1708/spotify-custom-radio/issues";
         text =
         <div>
-            Created by Quang Tran, October 2021. Forward all your bug reports and/or suggestions to <a href={githubURL}>here.</a>
+            Created by Quang Tran, October 2021. Utilizing the Spotify API in developer mode, so only email addresses added through the dashboard can utilize it. Forward all your bug reports and/or suggestions to <a href={githubURL}>here.</a>
         </div>
     } else {
         text = <div>{footerText}</div>;
